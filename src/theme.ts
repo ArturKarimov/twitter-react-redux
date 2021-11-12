@@ -26,10 +26,13 @@ export const theme = createTheme({
             contrastText: '#fff'
         },
         secondary: {
-            main: 'rgb(26, 145, 218)',
+            main: 'rgb(255 212 0)',
         },
         error: {
             main: red.A400,
+        },
+        info: {
+            main: 'rgb(239, 243, 244)'
         },
         background: {
             default: '#fff'
