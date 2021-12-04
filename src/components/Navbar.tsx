@@ -11,6 +11,8 @@ import UserIcon from "@mui/icons-material/PersonOutline";
 import MoreIcon from "@mui/icons-material/MoreHoriz";
 import {makeStyles} from "@mui/styles";
 import SignComponentNavbar from "./SignComponentNavbar";
+import TextFieldModalItem from "./TextFieldModalItem";
+import { Link } from 'react-router-dom';
 
 
 const useStyles = makeStyles(theme => ({
@@ -45,6 +47,16 @@ const Navbar = () => {
 
     const classes = useStyles()
 
+    const [open, setOpen] = React.useState<boolean>(false);
+
+    const handleOpenTextField = () => {
+        setOpen(true);
+    };
+
+    const handleCloseTextField = () => {
+        setOpen(false);
+    };
+
     return (
         <Box sx={{width: '24%'}}>
             <Paper sx={{
@@ -57,16 +69,21 @@ const Navbar = () => {
                    variant="outlined"
                    square
             >
-                <IconButton className={classes.twitterIconNavbar} sx={{marginLeft: '8px'}}>
-                    <TwitterIcon color='primary'/>
-                </IconButton>
+                <Link to={'/home'}>
+                    <IconButton className={classes.twitterIconNavbar} sx={{marginLeft: '8px'}}>
+                        <TwitterIcon color='primary'/>
+                    </IconButton>
+                </Link>
+
                 <MenuList className={classes.navbarMenu}>
+                    <Link to={'/home'} style={{textDecoration: 'none', color: 'inherit'}}>
                     <MenuItem className={classes.navbar}>
-                        <ListItemIcon>
-                            <HomeIcon sx={{color: '#000', fontSize: '32px'}}/>
-                        </ListItemIcon>
-                        <ListItemText className={classes.mainItemText}>Главная</ListItemText>
+                            <ListItemIcon>
+                                <HomeIcon sx={{color: '#000', fontSize: '32px'}}/>
+                            </ListItemIcon>
+                            <ListItemText className={classes.mainItemText}>Главная</ListItemText>
                     </MenuItem>
+                    </Link>
                     <MenuItem className={classes.navbar}>
                         <ListItemIcon>
                             <Grid3x3Icon sx={{color: '#000', fontSize: '32px'}}/>
@@ -115,9 +132,16 @@ const Navbar = () => {
                         <ListItemText>Еще</ListItemText>
                     </MenuItem>
                 </MenuList>
-                <Button variant='contained' fullWidth sx={{padding: '15px', borderRadius: '30px', textTransform: 'none',
-                    fontWeight: 800, fontSize: '17px', marginBottom: '100px'}}>Твитнуть</Button>
+                <Button variant='contained'
+                        fullWidth
+                        sx={{padding: '15px', borderRadius: '30px', textTransform: 'none',
+                    fontWeight: 800, fontSize: '17px', marginBottom: '100px'}}
+                        onClick={handleOpenTextField}
+                >
+                    Твитнуть
+                </Button>
                 <SignComponentNavbar/>
+                {open && <TextFieldModalItem open={open} closeModal={handleCloseTextField}/>}
             </Paper>
         </Box>
     );

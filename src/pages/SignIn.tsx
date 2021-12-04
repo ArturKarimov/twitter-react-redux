@@ -5,8 +5,8 @@ import TwitterIcon from '@mui/icons-material/Twitter';
 import {Typography} from "@mui/material";
 import Button from "@mui/material/Button";
 import Link from "@mui/material/Link";
-import FormDialog from "./LoginModalForm";
-import FormDialogRegister from "./RegisterModalForm";
+import FormDialog from "../components/LoginModalForm";
+import FormDialogRegister from "../components/RegisterModalForm";
 
 
 const useStyles = makeStyles(theme => ({

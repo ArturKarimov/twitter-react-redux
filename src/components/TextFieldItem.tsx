@@ -62,7 +62,11 @@ const useStyles = makeStyles(theme => ({
 
 }))
 
-const TextFieldItem: FC = () => {
+interface TextFieldProps {
+    minRows: number
+}
+
+const TextFieldItem: FC<TextFieldProps> = ({minRows}) => {
 
     const classes = useStyles()
 
@@ -73,15 +77,7 @@ const TextFieldItem: FC = () => {
 
     return (
         <>
-            <Paper variant="outlined" square sx={{
-                borderLeft: 'none',
-                borderTop: 'none',
-                borderRight: 'none',
-                padding: '10px',
-                height: 'fit-content'
-            }}>
-                <Typography sx={{fontWeight: 800}} variant='h6'>Главная</Typography>
-            </Paper>
+
             <Paper variant="outlined" square sx={{
                 borderLeft: 'none',
                 borderTop: 'none',
@@ -95,11 +91,11 @@ const TextFieldItem: FC = () => {
                         cursor: 'pointer'
                     }}
                             src={'https://cdn.shopify.com/s/files/1/0045/5104/9304/t/27/assets/AC_ECOM_SITE_2020_REFRESH_1_INDEX_M2_THUMBS-V2-1.jpg?v=8913815134086573859'}/>
-                    <TextareaAutosize className={classes.textareaForm}
+                            <TextareaAutosize className={classes.textareaForm}
                                       id="input-with-sx"
                                       value={postText}
                                       onChange={e => setPostText(e.target.value)}
-                                      minRows={2}
+                                      minRows={minRows}
 
                                       placeholder="Что происходит?"
                     />

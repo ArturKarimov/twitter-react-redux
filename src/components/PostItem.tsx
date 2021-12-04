@@ -1,15 +1,15 @@
-import React from 'react';
+import React, {FC} from 'react';
 
 import {makeStyles} from "@mui/styles";
 
-import {Avatar, Box, IconButton, ImageList, ImageListItem, Paper, Typography} from '@mui/material';
+import {Avatar, Box, IconButton, Paper, Typography} from '@mui/material';
 
 import MoreIcon from "@mui/icons-material/MoreHoriz";
 import MessageIcon from '@mui/icons-material/ChatBubbleOutline';
 import RepostIcon from '@mui/icons-material/Repeat';
 import LikeIcon from '@mui/icons-material/FavoriteBorder';
 import PublishIcon from '@mui/icons-material/VerticalAlignTop';
-
+import {Tweet} from "../store/ducks/tweets/contracts/types";
 
 
 const useStyles = makeStyles(theme => ({
@@ -20,11 +20,14 @@ const useStyles = makeStyles(theme => ({
         cursor: 'pointer',
         '&:hover': {
             backgroundColor: 'rgba(0, 0, 0, 0.03)'
+        },
+        a: {
+            textDecoration: 'none'
         }
     },
     postItem: {
         display: 'flex',
-        justifyContent: 'space-between'
+        justifyContent: 'space-between',
     },
     postInfo: {
         display: 'flex',
@@ -58,7 +61,11 @@ const useStyles = makeStyles(theme => ({
 
 }))
 
-const PostItem = () => {
+interface PostItemProps {
+    item: Tweet
+}
+
+const PostItem: FC<PostItemProps> = ({item}) => {
 
     const classes = useStyles()
 
@@ -77,15 +84,15 @@ const PostItem = () => {
                         height: '48px',
                         cursor: 'pointer'
                     }}
-                            src={'https://cdn.shopify.com/s/files/1/0045/5104/9304/t/27/assets/AC_ECOM_SITE_2020_REFRESH_1_INDEX_M2_THUMBS-V2-1.jpg?v=8913815134086573859'}/>
+                            src={item.user.avatarUrl}/>
                     <div>
                         <div className={classes.postItem}>
                             <div className={classes.postInfo}>
                                 <Typography style={{fontWeight: 700}}>
-                                    Artur Karimov
+                                    {item.user.fullName}
                                 </Typography>
                                 <Typography style={{color: 'rgb(83, 100, 113)'}}>
-                                    @arturkarimov_
+                                    {item.user.userName}
                                 </Typography>
                                 <span style={{marginRight: '10px'}}>
                                     &middot;
@@ -100,13 +107,11 @@ const PostItem = () => {
                             </IconButton>
                         </div>
                         <Typography>
-                            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Impedit sequi, unde. Amet autem,
-                            corporis deleniti dicta dolorum ea eum facilis, harum labore obcaecati odio, officia porro
-                            quibusdam sint suscipit! Et!
+                            {item.text}
                         </Typography>
                         <div style={{maxWidth: '502px'}}>
                             <img style={{maxWidth: '502px', borderRadius: '10px', marginTop: '10px'}}
-                                src={'https://pbs.twimg.com/card_img/1457174610114400262/zUdeNDgw?format=jpg&name=medium'}
+                                src={item.user.avatarUrl} alt={item.user.userName}
                             />
                         </div>
 

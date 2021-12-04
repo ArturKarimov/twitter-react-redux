@@ -1,0 +1,65 @@
+{
+  "tweets": [
+    {
+      "_id": "619381d22414b9c282c36ac0",
+      "text": "Nulla non irure consequat cupidatat minim commodo velit excepteur et adipisicing pariatur incididunt esse.",
+      "user": {
+        "fullName": "Booth Velasquez",
+        "userName": "Tanisha",
+        "avatarUrl": "https://source.unsplash.com/random/100x100?2"
+      }
+    },
+    {
+      "_id": "619381d27f55c8578f9cd1dd",
+      "text": "Enim incididunt do magna ea mollit et aliquip.",
+      "user": {
+        "fullName": "Lea Stanton",
+        "userName": "Corinne",
+        "avatarUrl": "https://source.unsplash.com/random/100x100?5"
+      }
+    },
+    {
+      "_id": "619381d247bcb0ea3a49534b",
+      "text": "Esse amet cillum sunt anim anim sunt amet velit.",
+      "user": {
+        "fullName": "Candace Robinson",
+        "userName": "Anastasia",
+        "avatarUrl": "https://source.unsplash.com/random/100x100?3"
+      }
+    },
+    {
+      "_id": "619381d2399e945a6564728a",
+      "text": "Cupidatat deserunt Lorem incididunt sint nulla nostrud quis esse proident.",
+      "user": {
+        "fullName": "Barnes Morgan",
+        "userName": "Palmer",
+        "avatarUrl": "https://source.unsplash.com/random/100x100?5"
+      }
+    },
+    {
+      "_id": "619381d2d9c5f45be6341466",
+      "text": "Reprehenderit commodo qui dolore commodo aute.",
+      "user": {
+        "fullName": "Vaughn Walker",
+        "userName": "Gillespie",
+        "avatarUrl": "https://source.unsplash.com/random/100x100?1"
+      }
+    },
+    {
+      "_id": "619381d2ddc6bae5378f2bca",
+      "text": "Ut quis excepteur dolor aliquip.",
+      "user": {
+        "fullName": "Weber Harding",
+        "userName": "Leticia",
+        "avatarUrl": "https://source.unsplash.com/random/100x100?2"
+      }
+    }
+  ],
+  "tags": [
+    { "name": "оксимиронвернись", "count": 2054, "country": "Россия" },
+    { "name": "Россия", "count": 437, "country": "Россия"},
+    { "name": "Лунтик возвращается", "count": 6582, "country": "Россия" },
+    { "name": "новыйгод2022", "count": 3898, "country": "Россия" },
+    { "name": "Отпуск", "count": 7139, "country": "Россия" }
+  ]
+}

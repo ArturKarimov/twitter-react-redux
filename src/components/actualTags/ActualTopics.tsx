@@ -6,7 +6,11 @@ import {makeStyles} from "@mui/styles";
 
 import {IconButton} from "@mui/material";
 import SettingIcon from '@mui/icons-material/SettingsOutlined';
-import MoreIcon from "@mui/icons-material/MoreHoriz";
+import Tag from "./Tag";
+import {useTypedSelector} from "../../hooks/useTypedSelector";
+import {LoadingState} from "../../store/ducks/tags/contracts/types";
+import LoadingItem from '../LoadingItem';
+import {Link} from 'react-router-dom';
 
 const useStyles = makeStyles(theme => ({
     actualTopics: {
@@ -46,6 +50,7 @@ const ActualTopics = () => {
 
     const classes = useStyles()
 
+    const {items, loadingStatus} = useTypedSelector(state => state.tags)
 
     return (
         <div className={classes.actualTopics}>
@@ -58,40 +63,12 @@ const ActualTopics = () => {
                         <SettingIcon sx={{fontSize: '20px'}}/>
                     </IconButton>
                 </div>
-                <div className={classes.actualTopic}>
-                    <div style={{display: 'flex', alignItems: 'center', justifyContent: 'space-between', height: '20px'}}>
-                        <Typography sx={{fontSize: '13px', color: 'rgb(83, 100, 113)'}}>
-                            Актуальные темы: Россия
-                        </Typography>
-                        <IconButton>
-                            <MoreIcon />
-                        </IconButton>
-                    </div>
-
-                    <Typography sx={{fontSize: '15px', color: 'rgb(0, 0, 0)', fontWeight: 700, marginBottom: '2px'}}>
-                        Польша
-                    </Typography>
-                    <Typography sx={{fontSize: '13px', color: 'rgba(0, 0, 0, 0.87)'}}>
-                        Твитов: 4812
-                    </Typography>
-                </div>
-                <div className={classes.actualTopic}>
-                    <div style={{display: 'flex', alignItems: 'center', justifyContent: 'space-between', height: '20px'}}>
-                        <Typography sx={{fontSize: '13px', color: 'rgb(83, 100, 113)'}}>
-                            Актуальные темы: Россия
-                        </Typography>
-                        <IconButton>
-                            <MoreIcon />
-                        </IconButton>
-                    </div>
-
-                    <Typography sx={{fontSize: '15px', color: 'rgb(0, 0, 0)', fontWeight: 700, marginBottom: '2px'}}>
-                        Польша
-                    </Typography>
-                    <Typography sx={{fontSize: '13px', color: 'rgba(0, 0, 0, 0.87)'}}>
-                        Твитов: 4812
-                    </Typography>
-                </div>
+                {
+                    loadingStatus === LoadingState.LOADING
+                        ? <LoadingItem />
+                        : items.map(tag =>
+                        <Link to={`/home/search/${tag.name}`} style={{textDecoration: 'none'}} key={tag.name}><Tag tag={tag}/></Link> )
+                }
                 <div className={classes.actualTopic} style={{marginBottom: 0}}>
                     <Button fullWidth size="small">Learn More</Button>
                 </div>
