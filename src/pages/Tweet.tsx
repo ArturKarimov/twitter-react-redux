@@ -4,6 +4,7 @@ import {useTypedSelector} from "../hooks/useTypedSelector";
 import PostItem from "../components/PostItem";
 import {LoadingState} from "../store/ducks/tweets/contracts/types";
 import LoadingItem from "../components/LoadingItem";
+import OneTweet from "../components/OneTweet";
 
 const Tweet = () => {
 
@@ -16,7 +17,7 @@ const Tweet = () => {
         <div>
             {
                 loadingStatus === LoadingState.LOADING ? <LoadingItem/>
-                : items.filter(tweet => tweet._id === idtweet).map(item => <PostItem item={item} key={item._id}/>)
+                : items.filter(tweet => tweet.id === idtweet).map(item => <OneTweet item={item} key={item.id}/>)
             }
         </div>
     )

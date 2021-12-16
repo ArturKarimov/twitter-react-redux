@@ -17,23 +17,10 @@ import StatisticIcon from "@mui/icons-material/AlignHorizontalLeft";
 import SmileIcon from "@mui/icons-material/Mood";
 import EventIcon from "@mui/icons-material/Event";
 import {calcTextLength} from "../services/calcTextLength";
-import {useDispatch} from "react-redux";
-import {fetchAddTweet} from "../store/ducks/tweets/contracts/actionCreators";
 
 
 const useStyles = makeStyles(theme => ({
 
-    afterInputItem: {
-        display: 'flex',
-        marginLeft: '80px',
-        alignItems: 'center',
-        borderBottom: '1px solid rgb(239, 243, 244)',
-        width: '501px',
-        paddingBottom: '15px',
-        '& svg': {
-            fontSize: '18px'
-        }
-    },
     textFieldButton: {
         '& button': {
             textTransform: 'none',
@@ -42,7 +29,7 @@ const useStyles = makeStyles(theme => ({
         }
     },
     textareaForm: {
-        width: '502px',
+        maxWidth: '545px',
         resize: 'none',
         fontSize: '20px',
         border: 'none',
@@ -54,11 +41,24 @@ const useStyles = makeStyles(theme => ({
             fontSize: '20px'
         }
     },
+
     textareaBtn: {
         '&:disabled': {
             opacity: 0.5,
             backgroundColor: 'rgb(29, 161, 242)',
-            color: '#fff'
+            color: '#fff',
+            textTransform: 'none',
+            fontWeight: 800
+        }
+    },
+    commentInfo: {
+        marginLeft: '65px',
+        color: 'rgb(83, 100, 113)',
+        fontSize: '15px',
+        paddingTop: '12px',
+        '& span': {
+            color: 'rgb(29, 161, 242)',
+            cursor: 'pointer'
         }
     }
 
@@ -68,19 +68,18 @@ interface TextFieldProps {
     minRows: number
 }
 
-const TextFieldItem: FC<TextFieldProps> = ({minRows}) => {
+const AddCommentToTweet: FC<TextFieldProps> = ({minRows}) => {
+
+    const [commentField, setCommentField] = useState(false)
 
     const classes = useStyles()
-
-    const dispatch = useDispatch()
 
     const [postText, setPostText] = useState<string>('')
 
     const currentTextLength = calcTextLength(postText.length)
 
-    const handleAddTweet = () => {
-        setPostText('')
-        dispatch(fetchAddTweet(postText))
+    const handleTextarea = () => {
+        setCommentField(true)
     }
 
 
@@ -88,61 +87,68 @@ const TextFieldItem: FC<TextFieldProps> = ({minRows}) => {
         <>
 
             <Paper variant="outlined" square sx={{
-                borderLeft: 'none',
-                borderTop: 'none',
-                borderRight: 'none'
+                border: 'none',
             }}>
-                <Box sx={{display: 'flex', alignItems: 'center', padding: '8px 17px'}}>
-                    <Avatar sx={{
-                        marginRight: '15px',
-                        width: '48px',
-                        height: '48px',
-                        cursor: 'pointer'
-                    }}
-                            src={'https://cdn.shopify.com/s/files/1/0045/5104/9304/t/27/assets/AC_ECOM_SITE_2020_REFRESH_1_INDEX_M2_THUMBS-V2-1.jpg?v=8913815134086573859'}/>
-                            <TextareaAutosize className={classes.textareaForm}
-                                      id="input-with-sx"
-                                      value={postText}
-                                      onChange={e => setPostText(e.target.value)}
-                                      minRows={minRows}
 
-                                      placeholder="Что происходит?"
-                    />
-                </Box>
-                <div className={classes.afterInputItem}>
-                    <EarthIcon color='primary'/>
-                    <Typography color='primary'
-                                sx={{
-                                    marginLeft: '3px',
-                                    fontSize: '14px',
-                                    fontWeight: 800
-                                }}>
-                        Отвечать могут все пользователи
+                {
+                    commentField && <Typography className={classes.commentInfo}>
+                        В ответ
+                        &nbsp;
+                        <span>@arturkarimov_</span>
                     </Typography>
-                </div>
+                }
+
+                <Box sx={{display: 'flex', justifyContent: 'space-between',alignItems: 'center', padding: '5px 2px'}}>
+                    <div style={{display: 'flex', alignItems: 'center'}}>
+                        <Avatar sx={{
+                            marginRight: '15px',
+                            width: '48px',
+                            height: '48px',
+                            cursor: 'pointer'
+                        }}
+                                src={'https://cdn.shopify.com/s/files/1/0045/5104/9304/t/27/assets/AC_ECOM_SITE_2020_REFRESH_1_INDEX_M2_THUMBS-V2-1.jpg?v=8913815134086573859'}/>
+                        <TextareaAutosize className={classes.textareaForm}
+                                          id="input-with-sx"
+                                          value={postText}
+                                          onChange={e => setPostText(e.target.value)}
+                                          minRows={minRows}
+                                          placeholder="Твитнуть в ответ"
+                                          onClick={handleTextarea}
+                        />
+                    </div>
+
+
+                        {
+                            !commentField &&
+                            <Button className={classes.textareaBtn} variant='contained' sx={{borderRadius: '30px'}}
+                                    disabled={!postText}
+                            >
+                                Ответить
+                            </Button>
+                        }
+
+
+                </Box>
                 <div style={{
                     display: 'flex',
                     justifyContent: 'space-between',
-                    padding: '10px 15px 10px 0',
                     alignItems: 'center'
                 }}>
-                    <div style={{marginLeft: '71px'}}>
-                        <IconButton>
-                            <ImageIcon color='primary' fontSize='small'/>
-                        </IconButton>
-                        <IconButton>
-                            <GifIcon color='primary' fontSize='small'/>
-                        </IconButton>
-                        <IconButton>
-                            <StatisticIcon color='primary' fontSize='small'/>
-                        </IconButton>
-                        <IconButton>
-                            <SmileIcon color='primary' fontSize='small'/>
-                        </IconButton>
-                        <IconButton>
-                            <EventIcon color='primary' fontSize='small'/>
-                        </IconButton>
-                    </div>
+                    {
+                        commentField &&
+                        <div style={{marginLeft: '71px'}}>
+                            <IconButton>
+                                <ImageIcon color='primary' fontSize='small'/>
+                            </IconButton>
+                            <IconButton>
+                                <GifIcon color='primary' fontSize='small'/>
+                            </IconButton>
+                            <IconButton>
+                                <SmileIcon color='primary' fontSize='small'/>
+                            </IconButton>
+                        </div>
+                    }
+
                     {
                         postText &&
 
@@ -183,11 +189,15 @@ const TextFieldItem: FC<TextFieldProps> = ({minRows}) => {
                         </div>
                     }
                     <div className={classes.textFieldButton}>
-                        <Button className={classes.textareaBtn} variant='contained' sx={{borderRadius: '30px'}} disabled={!postText}
-                                onClick={handleAddTweet}
-                        >
-                            Твитнуть
-                        </Button>
+                        {
+                            commentField &&
+                            <Button className={classes.textareaBtn} variant='contained' sx={{borderRadius: '30px'}}
+                                    disabled={!postText}
+                            >
+                                Ответить
+                            </Button>
+                        }
+
                     </div>
                 </div>
             </Paper>
@@ -196,4 +206,4 @@ const TextFieldItem: FC<TextFieldProps> = ({minRows}) => {
 };
 
 // @ts-ignore
-export default TextFieldItem
+export default AddCommentToTweet
