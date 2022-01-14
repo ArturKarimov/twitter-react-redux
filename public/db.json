@@ -1,69 +1,9 @@
 {
   "tweets": [
     {
-      "id": "1639155790459",
-      "_id": "1639155790459",
-      "text": "выасыв",
-      "user": {
-        "fullName": "Test FullName",
-        "userName": "testUsername",
-        "avatarUrl": "https://source.unsplash.com/random/100x100?2"
-      }
-    },
-    {
-      "id": "1639155793351",
-      "_id": "1639155793351",
-      "text": "акакеп",
-      "user": {
-        "fullName": "Test FullName",
-        "userName": "testUsername",
-        "avatarUrl": "https://source.unsplash.com/random/100x100?2"
-      }
-    },
-    {
-      "id": "1639155798338",
-      "_id": "1639155798338",
-      "text": "еринерен",
-      "user": {
-        "fullName": "Test FullName",
-        "userName": "testUsername",
-        "avatarUrl": "https://source.unsplash.com/random/100x100?2"
-      }
-    },
-    {
-      "id": "1639155814458",
-      "_id": "1639155814458",
-      "text": "аукауакук",
-      "user": {
-        "fullName": "Test FullName",
-        "userName": "testUsername",
-        "avatarUrl": "https://source.unsplash.com/random/100x100?2"
-      }
-    },
-    {
-      "id": "1639155839404",
-      "_id": "1639155839404",
-      "text": "аыасцывцу",
-      "user": {
-        "fullName": "Test FullName",
-        "userName": "testUsername",
-        "avatarUrl": "https://source.unsplash.com/random/100x100?2"
-      }
-    },
-    {
-      "id": "1639323741943",
-      "_id": "1639323741943",
-      "text": "jkj",
-      "user": {
-        "fullName": "Test FullName",
-        "userName": "testUsername",
-        "avatarUrl": "https://source.unsplash.com/random/100x100?2"
-      }
-    },
-    {
-      "id": "1639660233646",
-      "_id": "1639660233646",
-      "text": "create post",
+      "id": "1639662386961",
+      "_id": "1639662386961",
+      "text": "This is one tweet in clone-twitter. It's project is creating in React-Redux/Saga with TypeScript. \nFor visual parts is used MaterialUI.\nBackend will be create in NodeJS, Express, MongoDB.",
       "user": {
         "fullName": "Test FullName",
         "userName": "testUsername",

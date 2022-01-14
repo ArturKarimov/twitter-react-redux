@@ -12,11 +12,11 @@ const Tweets = () => {
 
     return (
         <>
-        <TextFieldItem minRows={2}/>
+        <TextFieldItem minRows={2} />
     {
         loadingStatus === LoadingState.LOADING ? <LoadingItem /> :
             items.map(item =>
-                <Link key={item._id} to={`/home/${item.user.userName}/${item._id}`} style={{textDecoration: 'none'}}><PostItem item={item}/></Link>
+                <Link key={item._id} to={`/home/${item.user.username}/${item._id}`} style={{textDecoration: 'none', zIndex: 1}}><PostItem item={item}/></Link>
             )
     }
     </>

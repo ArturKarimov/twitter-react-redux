@@ -10,12 +10,9 @@ import {
     Typography,
     TextareaAutosize
 } from "@mui/material";
-import EarthIcon from "@mui/icons-material/Public";
 import ImageIcon from "@mui/icons-material/CropOriginal";
 import GifIcon from "@mui/icons-material/Gif";
-import StatisticIcon from "@mui/icons-material/AlignHorizontalLeft";
 import SmileIcon from "@mui/icons-material/Mood";
-import EventIcon from "@mui/icons-material/Event";
 import {calcTextLength} from "../services/calcTextLength";
 
 

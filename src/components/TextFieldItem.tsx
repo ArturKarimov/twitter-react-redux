@@ -19,6 +19,8 @@ import EventIcon from "@mui/icons-material/Event";
 import {calcTextLength} from "../services/calcTextLength";
 import {useDispatch} from "react-redux";
 import {fetchAddTweet} from "../store/ducks/tweets/contracts/actionCreators";
+import {useTypedSelector} from "../hooks/useTypedSelector";
+import {LoadingAddTweet} from "../store/ducks/tweets/contracts/types";
 
 
 const useStyles = makeStyles(theme => ({
@@ -55,6 +57,8 @@ const useStyles = makeStyles(theme => ({
         }
     },
     textareaBtn: {
+        width: '104px',
+        height: '38px',
         '&:disabled': {
             opacity: 0.5,
             backgroundColor: 'rgb(29, 161, 242)',
@@ -65,14 +69,16 @@ const useStyles = makeStyles(theme => ({
 }))
 
 interface TextFieldProps {
-    minRows: number
+    minRows: number,
+    closeModal?: () => void | undefined
 }
 
-const TextFieldItem: FC<TextFieldProps> = ({minRows}) => {
+const TextFieldItem: FC<TextFieldProps> = ({minRows, closeModal}) => {
 
     const classes = useStyles()
 
     const dispatch = useDispatch()
+    const {loadingAddTweet} = useTypedSelector(state => state.tweets)
 
     const [postText, setPostText] = useState<string>('')
 
@@ -81,6 +87,9 @@ const TextFieldItem: FC<TextFieldProps> = ({minRows}) => {
     const handleAddTweet = () => {
         setPostText('')
         dispatch(fetchAddTweet(postText))
+        if (closeModal) {
+            closeModal()
+        }
     }
 
 
@@ -105,7 +114,6 @@ const TextFieldItem: FC<TextFieldProps> = ({minRows}) => {
                                       value={postText}
                                       onChange={e => setPostText(e.target.value)}
                                       minRows={minRows}
-
                                       placeholder="Что происходит?"
                     />
                 </Box>
@@ -183,10 +191,12 @@ const TextFieldItem: FC<TextFieldProps> = ({minRows}) => {
                         </div>
                     }
                     <div className={classes.textFieldButton}>
-                        <Button className={classes.textareaBtn} variant='contained' sx={{borderRadius: '30px'}} disabled={!postText}
+                        <Button className={classes.textareaBtn} variant='contained' sx={{borderRadius: '30px'}} disabled={!postText || postText.length === 281 || loadingAddTweet === LoadingAddTweet.LOADING}
                                 onClick={handleAddTweet}
                         >
-                            Твитнуть
+                            {
+                                loadingAddTweet === 'LOADING' ? <CircularProgress color='info' size={25}/> : 'Твитнуть'
+                            }
                         </Button>
                     </div>
                 </div>

@@ -6,6 +6,7 @@ export enum TweetsActionsType {
     LOADING_TWEETS = 'tweets/LOADING_TWEETS',
     FETCH_ADD_TWEET = 'tweets/FETCH_ADD_TWEET',
     ADD_TWEET = 'tweets/ADD_TWEET',
+    DELETE_TWEET = 'tweets/DELETE_TWEET'
 }
 
 export interface SetTweetsActionInterface {
@@ -32,6 +33,11 @@ export interface AddTweetActionInterface {
     payload: Tweet
 }
 
+// export interface DeleteTweetActionInterface {
+//     type: TweetsActionsType.DELETE_TWEET,
+//     payload: string
+// }
+
 export const setTweets = (payload: Tweet[]): SetTweetsActionInterface => ({
     type: TweetsActionsType.SET_TWEETS,
     payload
@@ -55,6 +61,11 @@ export const addTweet = (payload: Tweet): AddTweetActionInterface => ({
     type: TweetsActionsType.ADD_TWEET,
     payload
 })
+
+// export const deleteTweet = (payload: string): DeleteTweetActionInterface => ({
+//     type: TweetsActionsType.DELETE_TWEET,
+//     payload
+// })
 
 export type TweetsActions = SetTweetsActionInterface
     | FetchTweetsActionInterface

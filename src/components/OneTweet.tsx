@@ -1,4 +1,4 @@
-import React, {FC} from 'react';
+import React, {FC, useEffect, useState} from 'react';
 
 import {makeStyles} from "@mui/styles";
 
@@ -11,6 +11,11 @@ import LikeIcon from '@mui/icons-material/FavoriteBorder';
 import PublishIcon from '@mui/icons-material/VerticalAlignTop';
 import {Tweet} from "../store/ducks/tweets/contracts/types";
 import AddCommentToTweet from "./AddCommentToTweet";
+import {useParams} from 'react-router';
+import {tweetsApi} from "../api/tweets/tweetsApi";
+import LoadingItem from "./LoadingItem";
+import format from 'date-fns/format'
+import ruLang from "date-fns/locale/ru";
 
 
 const useStyles = makeStyles(theme => ({
@@ -69,15 +74,30 @@ const useStyles = makeStyles(theme => ({
 
 }))
 
-interface PostItemProps {
-    item: Tweet
-}
 
-const OneTweet: FC<PostItemProps> = ({item}) => {
+const OneTweet: FC = () => {
+
+    const [item, setItem] = useState<Tweet>()
+    const [loading, setLoading] = useState<boolean>(false)
+    const {idtweet} = useParams()
+
+    async function fetchOneTweet() {
+
+        setLoading(true)
+        const response = await tweetsApi.fetchTweetById(idtweet)
+        setItem(response)
+        setLoading(false)
+    }
+
+
+    useEffect(() => {
+        fetchOneTweet()
+    }, [])
 
     const classes = useStyles()
 
     return (
+        loading ? <LoadingItem /> :
         <Box>
             <Paper variant="outlined" square sx={{
                 borderLeft: 'none',
@@ -93,15 +113,15 @@ const OneTweet: FC<PostItemProps> = ({item}) => {
                                 height: '48px',
                                 cursor: 'pointer'
                             }}
-                                    src={item.user.avatarUrl}/>
+                                    src={item?.user.avatarUrl}/>
                             <div className={classes.postItem}>
                                 <div className={classes.postInfo}>
-                                    <Typography style={{fontWeight: 700, lineHeight: '1'}}>
-                                        {item.user.fullName}
+                                    <div style={{fontWeight: 700, lineHeight: '1'}}>
+                                        {item?.user.fullname}
                                         <Typography style={{color: 'rgb(83, 100, 113)'}}>
-                                            {item.user.userName}
+                                            {item?.user.username}
                                         </Typography>
-                                    </Typography>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -114,24 +134,20 @@ const OneTweet: FC<PostItemProps> = ({item}) => {
 
                     <div>
                         <Typography className={classes.tweetText}>
-                            {item.text}
+                            {item?.text}
                         </Typography>
                         <div style={{maxWidth: '502px'}}>
                             <img style={{maxWidth: '502px', borderRadius: '10px', marginTop: '10px'}}
-                                 src={item.user.avatarUrl} alt={item.user.userName}
+                                 src={item?.user.avatarUrl} alt={item?.user.username}
                             />
                         </div>
                         <div>
-                            <Typography className={classes.tweetTextDateInfo}>
-                                8:55 PM
+                            <Typography component={'span'} className={classes.tweetTextDateInfo}>
+                                {format(new Date(item?.createdAt || null), 'H:mm')}
                                 <span>
                                     &middot;
                                 </span>
-                                5 дек. 2021 г.
-                                <span>
-                                    &middot;
-                                </span>
-                                Twitter for Android
+                                {format(new Date(item?.createdAt || null), 'dd MMM yyyy г.', {locale: ruLang})}
                             </Typography>
                         </div>
                         <Paper variant="outlined" square sx={{
@@ -167,11 +183,7 @@ const OneTweet: FC<PostItemProps> = ({item}) => {
                             </div>
                         </Paper>
                         <AddCommentToTweet minRows={1}/>
-
-
                     </div>
-
-
                 </Box>
             </Paper>
         </Box>

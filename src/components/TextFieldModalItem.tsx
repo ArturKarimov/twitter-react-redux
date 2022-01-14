@@ -9,7 +9,7 @@ import DialogTitle from "@mui/material/DialogTitle";
 
 interface TextFieldModalItem {
     open: boolean,
-    closeModal: () => void
+    closeModal?: () => void | undefined
 }
 
 
@@ -35,7 +35,7 @@ const TextFieldModalItem: FC<TextFieldModalItem> = ({open, closeModal}) => {
                         <CloseIcon />
                     </IconButton>
                 </DialogTitle>
-                <TextFieldItem minRows={4}/>
+                <TextFieldItem minRows={4} closeModal={closeModal}/>
             </Dialog>
         </div>
     );

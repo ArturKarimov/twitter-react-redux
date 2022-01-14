@@ -14,19 +14,9 @@ export function* fetchTweetsRequest(): any {
 }
 
 
-export function* fetchAddTweetRequest({payload}: FetchAddTweetActionInterface) {
+export function* fetchAddTweetRequest({payload: text}: FetchAddTweetActionInterface) {
     try {
-        const newTweet: Tweet = {
-            id: Date.now().toString(),
-            _id: Date.now().toString(),
-            text: payload,
-            user: {
-                fullName: "Test FullName",
-                userName: "testUsername",
-                avatarUrl: "https://source.unsplash.com/random/100x100?2"
-            }
-        }
-        const item: Tweet = yield call(tweetsApi.fetchAddTweet, newTweet)
+        const item: Tweet = yield call(tweetsApi.fetchAddTweet, text)
         yield put(addTweet(item))
 
     } catch (e) {

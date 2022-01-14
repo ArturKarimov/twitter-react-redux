@@ -32,7 +32,7 @@ export const theme = createTheme({
             main: red.A400,
         },
         info: {
-            main: 'rgb(239, 243, 244)'
+            main: 'rgb(95,95,95)'
         },
         background: {
             default: '#fff'

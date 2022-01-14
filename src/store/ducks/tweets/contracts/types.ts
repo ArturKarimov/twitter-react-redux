@@ -14,10 +14,11 @@ export enum LoadingAddTweet {
 export interface Tweet {
     id: string,
     _id: string,
+    createdAt: any,
     text: string,
     user: {
-        fullName: string,
-        userName: string,
+        fullname: string,
+        username: string,
         avatarUrl: string
     }
 }
