@@ -17,7 +17,6 @@ export const tweetsReducer = produce((draft: Draft<TweetsState>, action: TweetsA
         case TweetsActionsType.LOADING_TWEETS:
             draft.loadingStatus = action.payload
             break
-
         case TweetsActionsType.FETCH_TWEETS:
             draft.loadingStatus = LoadingState.LOADING
             break
@@ -27,6 +26,9 @@ export const tweetsReducer = produce((draft: Draft<TweetsState>, action: TweetsA
         case TweetsActionsType.ADD_TWEET:
             draft.items.splice(0, 0, action.payload)
             draft.loadingAddTweet = LoadingAddTweet.NEVER
+            break
+        case TweetsActionsType.DELETE_TWEET:
+            draft.items = draft.items.filter(item => item._id !== action.payload)
             break
         default:
             return draft

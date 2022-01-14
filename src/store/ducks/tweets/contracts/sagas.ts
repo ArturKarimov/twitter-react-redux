@@ -1,4 +1,10 @@
-import {addTweet, FetchAddTweetActionInterface, setTweets, setTweetsLoading, TweetsActionsType} from "./actionCreators";
+import {
+    addTweet,
+    FetchAddTweetActionInterface,
+    setTweets,
+    setTweetsLoading,
+    TweetsActionsType
+} from "./actionCreators";
 import {call, put, takeEvery} from 'redux-saga/effects'
 import {tweetsApi} from "../../../../api/tweets/tweetsApi";
 import {LoadingState, Tweet} from "./types";
@@ -24,8 +30,18 @@ export function* fetchAddTweetRequest({payload: text}: FetchAddTweetActionInterf
     }
 }
 
+export function* deleteTweetRequest(payload: string): any {
+    try {
+        yield call(tweetsApi.deleteTweet, payload)
+    } catch (e) {
+        console.log(e)
+    }
+}
+
 
 export function* tweetsSaga() {
     yield takeEvery(TweetsActionsType.FETCH_TWEETS, fetchTweetsRequest)
     yield takeEvery(TweetsActionsType.FETCH_ADD_TWEET, fetchAddTweetRequest)
+    // @ts-ignore
+    yield takeEvery(TweetsActionsType.DELETE_TWEET, deleteTweetRequest)
 }

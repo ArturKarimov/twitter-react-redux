@@ -33,10 +33,10 @@ export interface AddTweetActionInterface {
     payload: Tweet
 }
 
-// export interface DeleteTweetActionInterface {
-//     type: TweetsActionsType.DELETE_TWEET,
-//     payload: string
-// }
+export interface DeleteTweetActionInterface {
+    type: TweetsActionsType.DELETE_TWEET,
+    payload: string
+}
 
 export const setTweets = (payload: Tweet[]): SetTweetsActionInterface => ({
     type: TweetsActionsType.SET_TWEETS,
@@ -62,13 +62,15 @@ export const addTweet = (payload: Tweet): AddTweetActionInterface => ({
     payload
 })
 
-// export const deleteTweet = (payload: string): DeleteTweetActionInterface => ({
-//     type: TweetsActionsType.DELETE_TWEET,
-//     payload
-// })
+export const deleteTweetAC = (payload: string): DeleteTweetActionInterface => ({
+    type: TweetsActionsType.DELETE_TWEET,
+    payload
+})
+
 
 export type TweetsActions = SetTweetsActionInterface
     | FetchTweetsActionInterface
     | SetTweetsLoadingActionInterface
     | FetchAddTweetActionInterface
     | AddTweetActionInterface
+    | DeleteTweetActionInterface

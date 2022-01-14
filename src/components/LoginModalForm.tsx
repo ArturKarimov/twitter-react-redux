@@ -5,11 +5,16 @@ import Dialog from '@mui/material/Dialog';
 import DialogContent from '@mui/material/DialogContent';
 import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
-import { DialogActions } from '@mui/material';
-import {IconButton} from "@mui/material";
+import {DialogActions, IconButton} from '@mui/material';
 import TwitterIcon from '@mui/icons-material/Twitter';
 import CloseIcon from '@mui/icons-material/Close';
 import Button from "@mui/material/Button";
+import {Controller, SubmitHandler, useForm} from "react-hook-form";
+import {yupResolver} from '@hookform/resolvers/yup';
+import * as yup from "yup";
+import {useDispatch} from "react-redux";
+import {fetchAuthUser} from "../store/ducks/auth/contracts/actionCreators";
+import {useNavigate} from "react-router";
 
 
 interface FormDialogProps {
@@ -17,8 +22,34 @@ interface FormDialogProps {
     closeModal: () => void
 }
 
+export interface LoginInput {
+    username: string,
+    password: string
+}
+
+const LoginFormSchema = yup.object({
+    username: yup.string().email('Неверная почта').required('Введите почту'),
+    password: yup.string().min(6, 'Минимальная длина пароля 6 символов').required(),
+}).required();
+
 
 const FormDialog: FC<FormDialogProps> = ({open, closeModal}) => {
+
+    const dispatch = useDispatch()
+    const navigate = useNavigate()
+
+    const { control, handleSubmit, formState: { errors } } = useForm<LoginInput>({
+        resolver: yupResolver(LoginFormSchema)
+    });
+    const onSubmit: SubmitHandler<LoginInput> = (data: LoginInput) => {
+        try {
+            dispatch(fetchAuthUser(data))
+            closeModal()
+            navigate('/home')
+        } catch (e) {
+            console.log(e)
+        }
+    };
 
     return (
         <div>
@@ -41,51 +72,69 @@ const FormDialog: FC<FormDialogProps> = ({open, closeModal}) => {
                         <CloseIcon />
                     </IconButton>
                 </DialogTitle>
-                <DialogContent>
-                    <DialogContentText style={{
-                        fontWeight: 700,
-                        fontSize: '23px',
-                        color: '#000',
-                        marginBottom: '30px'
-                    }}>
-                        Чтобы войти, введите адрес электронной почты и пароль
-                    </DialogContentText>
+                <form onSubmit={handleSubmit(onSubmit)}>
+                    <DialogContent>
+                        <DialogContentText style={{
+                            fontWeight: 700,
+                            fontSize: '23px',
+                            color: '#000',
+                            marginBottom: '30px'
+                        }}>
+                            Чтобы войти, введите адрес электронной почты и пароль
+                        </DialogContentText>
+                        <Controller
+                            name="username"
+                            control={control}
+                            defaultValue=""
+                            render={({field}) => <TextField {...field} autoFocus
+                                                            margin="dense"
+                                                            label="Адрес электронной почты"
+                                                            type="email"
+                                                            fullWidth
+                                                            error={!!errors.username}
+                                                            helperText={errors.username?.message}
+                                                            variant="outlined"
+                                                            sx={{marginBottom: '25px'}}/>}
 
-                    <TextField
-                        autoFocus
-                        margin="dense"
-                        id="name"
-                        label="Адрес электронной почты"
-                        type="email"
-                        fullWidth
-                        variant="outlined"
-                        sx={{marginBottom: '25px'}}
-                    />
-                    <TextField
-                        autoFocus
-                        margin="dense"
-                        id="name"
-                        label="Пароль"
-                        type="password"
-                        fullWidth
-                        variant="outlined"
-                        sx={{marginBottom: '150px'}}
-                    />
-                </DialogContent>
-                <DialogActions>
-                    <Button onClick={closeModal} fullWidth
-                            sx={{color: '#fff', backgroundColor: '#000',
-                            borderRadius: '20px',
-                                width: '530px',
-                                height: '44px',
-                                margin: '0 auto 30px auto',
-                                "&:hover": {
-                                backgroundColor: 'rgb(0, 0, 0, 0.8)'
-                                }}}
-                    >
-                        Войти
-                    </Button>
-                </DialogActions>
+
+                        />
+                        <Controller
+                            name="password"
+                            control={control}
+                            defaultValue=""
+                            render={({field}) => <TextField {...field}
+                                                            autoFocus
+                                                            margin="dense"
+                                                            label="Пароль"
+                                                            type="password"
+                                                            fullWidth
+                                                            error={!!errors.password}
+                                                            helperText={errors.password?.message}
+                                                            variant="outlined"
+                                                            sx={{marginBottom: '150px'}} />}
+
+
+                        />
+                    </DialogContent>
+                    <DialogActions>
+                        <Button
+                            // onClick={closeModal}
+                            type="submit"
+                            fullWidth
+                                sx={{color: '#fff', backgroundColor: '#000',
+                                    borderRadius: '20px',
+                                    width: '530px',
+                                    height: '44px',
+                                    margin: '0 auto 30px auto',
+                                    "&:hover": {
+                                        backgroundColor: 'rgb(0, 0, 0, 0.8)'
+                                    }}}
+                        >
+                            Войти
+                        </Button>
+                    </DialogActions>
+                </form>
+
             </Dialog>
         </div>
     );

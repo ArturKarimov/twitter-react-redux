@@ -12,7 +12,7 @@ import PublishIcon from '@mui/icons-material/VerticalAlignTop';
 import {Tweet} from "../store/ducks/tweets/contracts/types";
 import {formatDate} from "../utils/formatDate";
 import {tweetsApi} from "../api/tweets/tweetsApi";
-import {fetchTweets} from "../store/ducks/tweets/contracts/actionCreators";
+import {deleteTweetAC, fetchTweets} from "../store/ducks/tweets/contracts/actionCreators";
 import {useDispatch} from "react-redux";
 
 
@@ -76,6 +76,7 @@ interface PostItemProps {
 const PostItem: FC<PostItemProps> = ({item}) => {
 
     const classes = useStyles()
+    const dispatch = useDispatch()
 
     const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
     const open = Boolean(anchorEl);
@@ -89,10 +90,10 @@ const PostItem: FC<PostItemProps> = ({item}) => {
         setAnchorEl(null);
     };
 
-    const deleteTweet = async (event: React.MouseEvent, id: string) => {
+    const deleteTweet = (event: React.MouseEvent, id: string) => {
         event.stopPropagation()
         event.preventDefault()
-        await tweetsApi.deleteTweet(id)
+        dispatch(deleteTweetAC(id))
         setAnchorEl(null)
     }
 

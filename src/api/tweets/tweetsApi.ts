@@ -9,6 +9,7 @@ interface Response<T> {
 
 
 
+
 export const tweetsApi = {
     async fetchTweets(): Promise<Tweet[]> {
         const {data} = await $api.get<Response<Tweet[]>>('/tweets')
@@ -22,7 +23,7 @@ export const tweetsApi = {
         const {data} = await $api.post<Response<Tweet>>('/tweets', {text: payload})
         return data.data
     },
-    async deleteTweet(payload: string) {
+    async deleteTweet({payload}: any) {
         const {data} = await $api.delete('/tweets/' + payload)
         return data.data
     }

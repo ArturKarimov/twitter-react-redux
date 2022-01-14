@@ -9,7 +9,6 @@ import {fetchTweets} from "../store/ducks/tweets/contracts/actionCreators";
 import {fetchTags} from "../store/ducks/tags/contracts/actionCreators";
 import {Outlet} from 'react-router-dom';
 import {useNavigate, useParams} from "react-router";
-import PostItem from "../components/PostItem";
 
 
 const TwitterHome = () => {
