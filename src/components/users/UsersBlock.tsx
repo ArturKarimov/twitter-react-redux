@@ -1,16 +1,13 @@
 import Button from '@mui/material/Button/Button';
 import CardContent from '@mui/material/CardContent/CardContent';
 import Typography from '@mui/material/Typography/Typography';
-import React from 'react';
+import React, {FC} from 'react';
 import {makeStyles} from "@mui/styles";
-
-import {IconButton} from "@mui/material";
-import SettingIcon from '@mui/icons-material/SettingsOutlined';
-import Tag from "./Tag";
 import {useTypedSelector} from "../../hooks/useTypedSelector";
 import {LoadingState} from "../../store/ducks/tags/contracts/types";
 import LoadingItem from '../LoadingItem';
 import {Link} from 'react-router-dom';
+import UserTag from "./UserTag";
 
 const useStyles = makeStyles(theme => ({
     actualTopics: {
@@ -46,28 +43,54 @@ const useStyles = makeStyles(theme => ({
     }
 }))
 
-const ActualTopics = () => {
+const ActualTopics: FC = () => {
 
     const classes = useStyles()
 
-    const {items, loadingStatus} = useTypedSelector(state => state.tags)
+    const {data, loadingStatus} = useTypedSelector(state => state.users)
+
+    // const items = [
+    //     {
+    //         "name": "оксимиронвернись",
+    //         "count": 2054,
+    //         "country": "Россия"
+    //     },
+    //     {
+    //         "name": "Россия",
+    //         "count": 437,
+    //         "country": "Россия"
+    //     },
+    //     {
+    //         "name": "Лунтик возвращается",
+    //         "count": 6582,
+    //         "country": "Россия"
+    //     },
+    //     {
+    //         "name": "новыйгод2022",
+    //         "count": 3898,
+    //         "country": "Россия"
+    //     },
+    //     {
+    //         "name": "Отпуск",
+    //         "count": 7139,
+    //         "country": "Россия"
+    //     }
+    // ]
 
     return (
         <div className={classes.actualTopics}>
             <CardContent sx={{padding: 0}} className={classes.cardItem}>
-                <div style={{display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: '16px'}}>
+                <div style={{padding: '16px'}}>
                     <Typography sx={{ fontSize: '20px', fontWeight: 800 }}>
-                        Актуальные темы для вас
+                        Кого читать
                     </Typography>
-                    <IconButton>
-                        <SettingIcon sx={{fontSize: '20px'}}/>
-                    </IconButton>
                 </div>
                 {
                     loadingStatus === LoadingState.LOADING
                         ? <LoadingItem />
-                        : items.map(tag =>
-                        <Link to={`/home/search/${tag.name}`} style={{textDecoration: 'none'}} key={tag.name}><Tag tag={tag}/></Link> )
+                        : !data ? null
+                        : data.map(user =>
+                        <Link to={`/home/search/${user.fullname}`} style={{textDecoration: 'none'}}><UserTag /></Link> )
                 }
                 <div className={classes.actualTopic} style={{marginBottom: 0}}>
                     <Button fullWidth size="small">Learn More</Button>

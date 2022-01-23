@@ -1,6 +1,6 @@
-import {LoadingState, UserState} from "./types";
+import {LoadingState, UserState} from "../../../types";
 import produce, {Draft} from "immer";
-import {AuthUserActions, AuthUserActionsType} from "./actionCreators";
+import {AuthUserActions, AuthUserActionsType, RegisterActionsType} from "./actionCreators";
 
 const initialState: UserState = {
     data: undefined,
@@ -9,6 +9,9 @@ const initialState: UserState = {
 
 export const authUserReducer = produce((draft: Draft<UserState>, action: AuthUserActions) => {
     switch (action.type) {
+        case AuthUserActionsType.FETCH_AUTH_USER:
+            draft.loadingStatus = LoadingState.LOADING
+            break
         case AuthUserActionsType.SET_AUTH_USER:
             draft.data = action.payload
             draft.loadingStatus = LoadingState.LOADED

@@ -1,7 +1,8 @@
 import axios from "axios";
 import {LoginInput} from "../../components/LoginModalForm";
-import {User} from "../../store/ducks/auth/contracts/types";
+import {User} from "../../store/types";
 import $api from "../../core/axios";
+import {RegisterInput} from "../../components/RegisterModalForm";
 
 export interface ResponseApi {
     success: string,
@@ -11,6 +12,10 @@ export interface ResponseApi {
 export const authApi = {
     async signIn(formData: LoginInput): Promise<ResponseApi> {
         const {data} = await axios.post<ResponseApi>('http://localhost:5555/auth/login', formData)
+        return data
+    },
+    async signUp(formData: RegisterInput): Promise<ResponseApi> {
+        const {data} = await axios.post<ResponseApi>('http://localhost:5555/auth/register', formData)
         return data
     },
     async getMe(): Promise<ResponseApi> {

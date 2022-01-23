@@ -3,12 +3,12 @@ import BackIcon from '@mui/icons-material/ArrowBack';
 import React, {useEffect} from 'react';
 import Navbar from "../components/Navbar";
 import SearchTextField from "../components/SearchTextField";
-import ActualTopics from "../components/actualTags/ActualTopics";
 import {useDispatch} from "react-redux";
 import {fetchTweets} from "../store/ducks/tweets/contracts/actionCreators";
 import {fetchTags} from "../store/ducks/tags/contracts/actionCreators";
 import {Outlet} from 'react-router-dom';
 import {useNavigate, useParams} from "react-router";
+import UsersBlock from "../components/users/UsersBlock";
 
 
 const TwitterHome = () => {
@@ -67,7 +67,7 @@ const TwitterHome = () => {
 
                 }} variant="outlined" square>
                     <SearchTextField/>
-                    <ActualTopics/>
+                    <UsersBlock/>
                 </Paper>
             </Box>
         </Container>

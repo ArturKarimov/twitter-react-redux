@@ -11,8 +11,7 @@ import LikeIcon from '@mui/icons-material/FavoriteBorder';
 import PublishIcon from '@mui/icons-material/VerticalAlignTop';
 import {Tweet} from "../store/ducks/tweets/contracts/types";
 import {formatDate} from "../utils/formatDate";
-import {tweetsApi} from "../api/tweets/tweetsApi";
-import {deleteTweetAC, fetchTweets} from "../store/ducks/tweets/contracts/actionCreators";
+import {deleteTweetAC} from "../store/ducks/tweets/contracts/actionCreators";
 import {useDispatch} from "react-redux";
 
 

@@ -21,6 +21,11 @@ import {useDispatch} from "react-redux";
 import {fetchAddTweet} from "../store/ducks/tweets/contracts/actionCreators";
 import {useTypedSelector} from "../hooks/useTypedSelector";
 import {LoadingAddTweet} from "../store/ducks/tweets/contracts/types";
+import Notification, {
+    NotificationPositionHorizontal,
+    NotificationPositionVertical,
+    NotificationStatus
+} from "./Notification";
 
 
 const useStyles = makeStyles(theme => ({
@@ -79,6 +84,7 @@ const TextFieldItem: FC<TextFieldProps> = ({minRows, closeModal}) => {
 
     const dispatch = useDispatch()
     const {loadingAddTweet} = useTypedSelector(state => state.tweets)
+    const {loadingStatus} = useTypedSelector(state => state.authUser)
 
     const [postText, setPostText] = useState<string>('')
 
@@ -92,10 +98,17 @@ const TextFieldItem: FC<TextFieldProps> = ({minRows, closeModal}) => {
         }
     }
 
+    if (loadingStatus === 'ERROR') {
+        return <Notification
+            notificationText={'Ошибка при добавлении твита!'}
+            status={NotificationStatus.error}
+            vertical={NotificationPositionVertical.bottom}
+            horizontal={NotificationPositionHorizontal.right}
+        />
+    }
 
     return (
         <>
-
             <Paper variant="outlined" square sx={{
                 borderLeft: 'none',
                 borderTop: 'none',
@@ -109,7 +122,7 @@ const TextFieldItem: FC<TextFieldProps> = ({minRows, closeModal}) => {
                         cursor: 'pointer'
                     }}
                             src={'https://cdn.shopify.com/s/files/1/0045/5104/9304/t/27/assets/AC_ECOM_SITE_2020_REFRESH_1_INDEX_M2_THUMBS-V2-1.jpg?v=8913815134086573859'}/>
-                            <TextareaAutosize className={classes.textareaForm}
+                    <TextareaAutosize className={classes.textareaForm}
                                       id="input-with-sx"
                                       value={postText}
                                       onChange={e => setPostText(e.target.value)}
@@ -191,7 +204,8 @@ const TextFieldItem: FC<TextFieldProps> = ({minRows, closeModal}) => {
                         </div>
                     }
                     <div className={classes.textFieldButton}>
-                        <Button className={classes.textareaBtn} variant='contained' sx={{borderRadius: '30px'}} disabled={!postText || postText.length === 281 || loadingAddTweet === LoadingAddTweet.LOADING}
+                        <Button className={classes.textareaBtn} variant='contained' sx={{borderRadius: '30px'}}
+                                disabled={!postText || postText.length === 281 || loadingAddTweet === LoadingAddTweet.LOADING}
                                 onClick={handleAddTweet}
                         >
                             {
