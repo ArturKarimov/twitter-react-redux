@@ -6,6 +6,7 @@ export enum AuthUserActionsType {
     SET_AUTH_USER = 'users/SET_AUTH_USER',
     FETCH_AUTH_USER = 'users/FETCH_AUTH_USER',
     LOADING_AUTH_USER = 'users/LOADING_AUTH_USER',
+    CHECK_AUTH_USER = 'users/CHECK_AUTH_USER'
 }
 
 export enum RegisterActionsType {
@@ -27,6 +28,10 @@ export interface FetchAuthUserActionInterface {
 export interface LoadingAuthUserActionInterface {
     type: AuthUserActionsType.LOADING_AUTH_USER,
     payload: LoadingState
+}
+
+export interface CheckAuthUserActionInterface {
+    type: AuthUserActionsType.CHECK_AUTH_USER
 }
 
 
@@ -61,6 +66,10 @@ export const setLoadingAuthUser = (payload: LoadingState): LoadingAuthUserAction
     payload
 })
 
+export const checkAuthUser = (): CheckAuthUserActionInterface => ({
+    type: AuthUserActionsType.CHECK_AUTH_USER
+})
+
 
 export const setRegisterUser = (payload: UserState['data']): SetRegisterUserActionInterface => ({
     type: RegisterActionsType.SET_REGISTER_USER,
@@ -84,3 +93,4 @@ export type AuthUserActions = SetAuthUserActionInterface
     | SetRegisterUserActionInterface
     | FetchRegisterUserActionInterface
     | LoadingRegisterUserActionInterface
+    | CheckAuthUserActionInterface

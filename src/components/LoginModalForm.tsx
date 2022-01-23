@@ -1,5 +1,5 @@
 import * as React from 'react';
-import {FC, useEffect} from 'react';
+import {FC} from 'react';
 import TextField from '@mui/material/TextField';
 import Dialog from '@mui/material/Dialog';
 import DialogContent from '@mui/material/DialogContent';

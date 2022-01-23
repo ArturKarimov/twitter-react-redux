@@ -1,20 +1,17 @@
 import {Route, Navigate, Routes} from "react-router-dom";
 
-import React, {useEffect, useState} from 'react';
+import React  from 'react';
 import Tweets from "../pages/Tweets";
 import Tweet from "../pages/Tweet";
 import Tags from "../pages/Tags";
 import {useTypedSelector} from "../hooks/useTypedSelector";
 import TwitterHome from "../pages/TwitterHome";
 import SignIn from "../pages/SignIn";
-import {useNavigate} from "react-router";
-import ErrorPage from "../pages/Error";
 
 const AppRouter = () => {
 
     const {data} = useTypedSelector(state => state.authUser)
     console.log(data)
-    const navigate = useNavigate()
 
     console.log('auth', !data)
 

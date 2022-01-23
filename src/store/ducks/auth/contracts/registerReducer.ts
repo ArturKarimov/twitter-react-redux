@@ -1,6 +1,6 @@
 import {LoadingState, UserState} from "../../../types";
 import produce, {Draft} from "immer";
-import {AuthUserActions, AuthUserActionsType, RegisterActionsType} from "./actionCreators";
+import {AuthUserActions, RegisterActionsType} from "./actionCreators";
 
 const initialState: UserState = {
     data: undefined,

@@ -7,13 +7,13 @@ import CloseIcon from "@mui/icons-material/Close";
 import DialogTitle from "@mui/material/DialogTitle";
 
 
-interface TextFieldModalItem {
+interface TextFieldModalItemProps {
     open: boolean,
     closeModal?: () => void | undefined
 }
 
 
-const TextFieldModalItem: FC<TextFieldModalItem> = ({open, closeModal}) => {
+const TextFieldModalItem: FC<TextFieldModalItemProps> = ({open, closeModal}) => {
 
     return (
         <div>

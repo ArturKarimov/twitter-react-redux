@@ -2,7 +2,7 @@ import React, {FC, useEffect, useState} from 'react';
 
 import {makeStyles} from "@mui/styles";
 
-import {Avatar, Box, IconButton, Paper, Typography} from '@mui/material';
+import {Avatar, Box, IconButton, Menu, MenuItem, Paper, Typography} from '@mui/material';
 
 import MoreIcon from "@mui/icons-material/MoreHoriz";
 import MessageIcon from '@mui/icons-material/ChatBubbleOutline';
@@ -11,11 +11,14 @@ import LikeIcon from '@mui/icons-material/FavoriteBorder';
 import PublishIcon from '@mui/icons-material/VerticalAlignTop';
 import {Tweet} from "../store/ducks/tweets/contracts/types";
 import AddCommentToTweet from "./AddCommentToTweet";
-import {useParams} from 'react-router';
+import {useNavigate, useParams} from 'react-router';
 import {tweetsApi} from "../api/tweets/tweetsApi";
 import LoadingItem from "./LoadingItem";
 import format from 'date-fns/format'
 import ruLang from "date-fns/locale/ru";
+import {useTypedSelector} from "../hooks/useTypedSelector";
+import {deleteTweetAC} from "../store/ducks/tweets/contracts/actionCreators";
+import {useDispatch} from "react-redux";
 
 
 const useStyles = makeStyles(theme => ({
@@ -79,10 +82,34 @@ const OneTweet: FC = () => {
 
     const [item, setItem] = useState<Tweet>()
     const [loading, setLoading] = useState<boolean>(false)
+    const {data: user} = useTypedSelector(state => state.authUser)
     const {idtweet} = useParams()
+    const dispatch = useDispatch()
+    const navigate = useNavigate()
+
+    const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
+    const open = Boolean(anchorEl);
+    const handleClick = (event: React.MouseEvent<HTMLElement>) => {
+        event.preventDefault()
+        setAnchorEl(event.currentTarget);
+    };
+    const handleClose = (event: React.MouseEvent<HTMLElement>) => {
+        event.stopPropagation()
+        event.preventDefault()
+        setAnchorEl(null);
+    };
+
+    const deleteTweet = (event: React.MouseEvent, id: string | undefined) => {
+        event.stopPropagation()
+        event.preventDefault()
+        if (id) {
+            dispatch(deleteTweetAC(id))
+        }
+        setAnchorEl(null)
+        navigate('/home')
+    }
 
     async function fetchOneTweet() {
-
         setLoading(true)
         const response = await tweetsApi.fetchTweetById(idtweet)
         setItem(response)
@@ -125,11 +152,37 @@ const OneTweet: FC = () => {
                                 </div>
                             </div>
                         </div>
-                        <div>
-                            <IconButton>
-                                <MoreIcon color='primary' fontSize='small'/>
-                            </IconButton>
-                        </div>
+                        {
+                            item?.user._id === user?._id ?
+                                <div>
+                                    <IconButton
+                                        aria-label="more"
+                                        id="long-button"
+                                        aria-controls={open ? 'long-menu' : undefined}
+                                        aria-expanded={open ? 'true' : undefined}
+                                        aria-haspopup="true"
+                                        onClick={handleClick}
+                                    >
+                                        <MoreIcon color='primary' fontSize='small'/>
+                                    </IconButton>
+                                    <Menu
+                                        id="long-menu"
+                                        MenuListProps={{
+                                            'aria-labelledby': 'long-button',
+                                        }}
+                                        anchorEl={anchorEl}
+                                        open={open}
+                                        onClose={handleClose}
+                                    >
+                                        <MenuItem onClick={handleClose}>
+                                            Редактировать
+                                        </MenuItem>
+                                        <MenuItem onClick={(event) => deleteTweet(event, item?._id)}>
+                                            Удалить
+                                        </MenuItem>
+                                    </Menu>
+                                </div> : null
+                        }
                     </div>
 
                     <div>

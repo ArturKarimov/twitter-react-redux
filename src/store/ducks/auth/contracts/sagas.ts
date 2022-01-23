@@ -3,7 +3,7 @@ import {call, put, takeEvery} from 'redux-saga/effects'
 import {LoadingState} from "../../../types";
 import {authApi, ResponseApi} from "../../../../api/auth/authApi";
 import {
-    AuthUserActionsType,
+    AuthUserActionsType, CheckAuthUserActionInterface,
     FetchAuthUserActionInterface,
     FetchRegisterUserActionInterface, RegisterActionsType,
     setAuthUser,
@@ -14,6 +14,16 @@ export function* fetchAuthUserRequest({payload}: FetchAuthUserActionInterface) {
     try {
         const data: ResponseApi = yield call(authApi.signIn, payload)
         localStorage.setItem('token', data.data.token)
+        yield put(setAuthUser(data.data))
+        yield put(setLoadingAuthUser(LoadingState.LOADED))
+    }catch (e) {
+        yield put(setLoadingAuthUser(LoadingState.ERROR))
+    }
+}
+
+export function* fetchCheckAuthUserRequest() {
+    try {
+        const data: ResponseApi = yield call(authApi.getMe)
         yield put(setAuthUser(data.data))
         yield put(setLoadingAuthUser(LoadingState.LOADED))
     }catch (e) {
@@ -33,5 +43,6 @@ export function* fetchRegisterUserRequest({payload}: FetchRegisterUserActionInte
 
 export function* authUserSaga() {
     yield takeEvery(AuthUserActionsType.FETCH_AUTH_USER, fetchAuthUserRequest)
+    yield takeEvery(AuthUserActionsType.CHECK_AUTH_USER, fetchCheckAuthUserRequest)
     yield takeEvery(RegisterActionsType.FETCH_REGISTER_USER, fetchRegisterUserRequest)
 }

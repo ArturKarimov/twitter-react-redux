@@ -12,11 +12,11 @@ export enum LoadingAddTweet {
 }
 
 export interface Tweet {
-    id: string,
     _id: string,
     createdAt: any,
     text: string,
     user: {
+        _id: string,
         fullname: string,
         username: string,
         avatarUrl: string

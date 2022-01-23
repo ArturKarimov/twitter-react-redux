@@ -2,6 +2,7 @@ import React from 'react';
 import {Avatar, Box, IconButton, Typography} from "@mui/material";
 import MoreIcon from "@mui/icons-material/MoreHoriz";
 import {makeStyles} from "@mui/styles";
+import {useTypedSelector} from "../hooks/useTypedSelector";
 
 const useStyles = makeStyles(theme => ({
     signWrapper: {
@@ -28,6 +29,7 @@ const useStyles = makeStyles(theme => ({
 const SignComponentNavbar = () => {
 
     const classes = useStyles()
+    const {data} = useTypedSelector(state => state.authUser)
 
     return (
         <Box>
@@ -43,10 +45,10 @@ const SignComponentNavbar = () => {
                         <div className={classes.signItem}>
                             <div className={classes.signInfo}>
                                 <Typography style={{fontWeight: 700}}>
-                                    Артур
+                                    {data?.fullname}
                                 </Typography>
                                 <Typography style={{color: 'rgb(83, 100, 113)'}}>
-                                    @arturkarimov_
+                                    @{data?.username.toLocaleLowerCase()}
                                 </Typography>
                             </div>
                             <IconButton>

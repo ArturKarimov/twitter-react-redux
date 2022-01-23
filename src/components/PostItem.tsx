@@ -13,6 +13,7 @@ import {Tweet} from "../store/ducks/tweets/contracts/types";
 import {formatDate} from "../utils/formatDate";
 import {deleteTweetAC} from "../store/ducks/tweets/contracts/actionCreators";
 import {useDispatch} from "react-redux";
+import {useTypedSelector} from "../hooks/useTypedSelector";
 
 
 const useStyles = makeStyles(theme => ({
@@ -76,6 +77,7 @@ const PostItem: FC<PostItemProps> = ({item}) => {
 
     const classes = useStyles()
     const dispatch = useDispatch()
+    const {data: user} = useTypedSelector(state => state.authUser)
 
     const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
     const open = Boolean(anchorEl);
@@ -95,6 +97,7 @@ const PostItem: FC<PostItemProps> = ({item}) => {
         dispatch(deleteTweetAC(id))
         setAnchorEl(null)
     }
+
 
     return (
         <Box>
@@ -128,6 +131,8 @@ const PostItem: FC<PostItemProps> = ({item}) => {
                                     {formatDate(new Date(item.createdAt))}
                                 </Typography>
                             </div>
+                            {
+                                item.user._id === user?._id ?
                             <div>
                                 <IconButton
                                     aria-label="more"
@@ -155,7 +160,8 @@ const PostItem: FC<PostItemProps> = ({item}) => {
                                         Удалить
                                     </MenuItem>
                                 </Menu>
-                            </div>
+                            </div> : null
+                            }
                         </div>
                         <Typography>
                             {item.text}
